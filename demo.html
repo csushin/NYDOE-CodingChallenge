@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New York Department Of Education - Coding Challenge</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://js.arcgis.com/4.1/esri/css/main.css">
+
+	<style>
+	html, body
+	{
+	    margin: 0 auto;
+	    padding: 0;
+	    padding-top: 30px;
+	    text-align: center;
+	    font-family: 'Open Sans', sans-serif;
+	    width: 100%;
+		height:100%;
+	}
+
+/*	svg {
+	  font: 10px sans-serif;
+	}*/
+
+	.lct-axis path, 
+	.lct-axis line{
+		fill: none;
+	    stroke: #000;
+	    shape-rendering: crispEdges;
+	}
+	.lct-axis text {
+	    fill: #000;
+	}
+	.lct-axis .tick line {
+	    stroke: rgba(0, 0, 0, 0.1);
+	}
+	.lct-line {
+	    fill: none;
+	    stroke: #000;
+	    stroke-width: 2;
+	}
+
+	.row-height{
+		height: 400px;
+	}
+
+	.nopadding {
+       padding: 0px !important;
+       margin: 0px !important;
+    }
+
+    @media (max-width: @screen-xs) {
+    	body{font-size: 7px;}
+	}
+
+	@media (max-width: @screen-sm) {
+    	body{font-size: 10px;}
+	}
+
+	@media (max-width: @screen-md) {
+	    body{font-size: 14px;}
+	}
+
+	</style>
+	<script type="text/javascript"  src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.min.js"></script>
+	<script type="text/javascript" src='./webcontent/js/DrawLineChart.js'></script>
+	<script type="text/javascript" src='./webcontent/js/DrawScatterPlot.js'></script>
+	<script type="text/javascript" src='./webcontent/js/DrawStackedBarChart.js'></script>
+	<script type="text/javascript" src='./webcontent/js/loadReport.js'></script>
+	<!-- <script src="https://js.arcgis.com/4.1/"></script> -->
+	
+</head>
+<body>
+<script type="text/javascript" src='webcontent/js/readfiles.js'></script>
+<div class="container-fluid" style="height: 100%">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<ul class="nav nav-pills">
+			      <form class="navbar-form navbar-left">
+			      	<div class="form-group">
+			      		<input type='file' id='readFile' accept=".csv">
+			      	</div>
+			      </form>
+				  <li role="presentation"><a href="#DivByOverview">By Districts</a></li>
+				  <li role="presentation"><a href="#DivByTeachers">By Teachers</a></li>
+				  <li role="presentation"><a href="#DivByRatings">By Ratings</a></li>
+				</ul>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div id='DivByOverview nopadding' class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height" id='lct-panel'></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height" id='lct-comment'></div>
+	</div>
+	<div id='DivByTeachers nopadding' class="row ">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height " id='bct-panel'></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height" id='bct-comment'></div>
+	</div>
+	<div id='DivByRatings nopadding' class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height" id='scpt-panel'></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 nopadding row-height" id='scpt-comment'></div>
+	</div>
+</div>
+
+<script>
+$('document').ready(function(){
+	document.getElementById('readFile').addEventListener('change', readFile, false);
+	// resize the svg while users resize the window
+	$(window).resize(function() {
+	  	beginRendering(globalData);
+	});
+})
+</script>
+</body>
+</html>
